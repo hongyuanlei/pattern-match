@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table name="test">
+    <rows>
+        <row>
+            <id>1</id>
+            <test>Test</test>
+        </row>
+        <row>
+            <id>2</id>
+            <test>Test2</test>
+        </row>
+    </rows>
+</table>
