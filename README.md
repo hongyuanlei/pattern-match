@@ -212,6 +212,12 @@ Java语言不支持动态多分派,所以不支持动态双分派。但是通过
 
 ![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-structure.jpeg)
 
+绕了半天我们终于回到了访问者模式上了，我们再来看看访问者模式的定义吧：
+
+>访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构则可以保持不变。
+
+对照类图，实现Visitable接口的具体类对应到结构不变的数据，而实现Visitor接口的具体类对应到对数据的操作。
+
 ####访问者模式的实际运用
 ![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-dom4j.jpg)
 
