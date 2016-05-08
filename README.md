@@ -210,4 +210,11 @@ Java语言不支持动态多分派,所以不支持动态双分派。但是通过
 
 ####访问者模式的结构
 
+![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-structure.jpeg)
+
+####访问者模式的实际运用
+![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-dom4j.jpg)
+
+####访问者模式实现模式匹配
+![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-matcher.jpg)
 
