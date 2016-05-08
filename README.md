@@ -186,7 +186,10 @@ public class Dispatch {
 father的静态类型是Father，真实类型也是Father,那么在编译阶段会根据方法接收者的静态类型和方法参数的静态类型决定Father.hardChoice(IE)，到了运行期方法的接收者Father会被替换成真实类型Father，所以依然会调用Father.hardChoice(IE)。
 
 我们再看第二部分：
-
+```java
+ Father son = new Son();
+ son.hardChoice(new Chrome());
+```
 father的静态类型是Father，真实类型也是Son,那么在编译阶段会根据方法接收者的静态类型和方法参数的静态类型决定Father.hardChoice(Chrome)，到了运行期方法的接收者Father会被替换成真实类型Son，所以依然会调用Son.hardChoice(Chrome)。
 
 
