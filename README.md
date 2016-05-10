@@ -81,7 +81,7 @@ Human man = new Man();
 
 **静态分派(Static Dispatch)**发生在编译时期，分派根据静态类型信息发生。Java使用**方法重载**实现静态分派。
 
-再会出看那个例子，在编译期编译器只知道man和women的静态类型，而不会知道它们的真实类型是什么，对于选择三个重载方法时发生了一次静态分派，所以到现在我想你应该已经明白了真相。
+再来看那个例子，在编译期编译器只知道man和women的静态类型，而不会知道它们的真实类型是什么，对于选择三个重载方法时发生了一次静态分派，所以到现在我想你应该已经明白了真相。
 
 ####动态分派
 
@@ -217,6 +217,111 @@ Java语言不支持动态多分派,所以不支持动态双分派。但是通过
 >访问者模式的目的是封装一些施加于某种数据结构元素之上的操作。一旦这些操作需要修改的话，接受这个操作的数据结构则可以保持不变。
 
 对照类图，实现Visitable接口的具体类对应到结构不变的数据，而实现Visitor接口的具体类对应到对数据的操作。
+
+再来看看实现代码：
+
+
+```java
+package visitor;
+
+public interface Visitable {
+    void accept(Visitor visitor);
+}
+```
+
+```java
+package visitor;
+
+
+public class ConcreteElementA implements Visitable{
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    public void operate01() {
+        System.out.println("operate01 ConcreteElementA ...");
+    }
+
+    public void operate02() {
+        System.out.println("operate02 ConcreteElementA ...");
+    }
+}
+```
+
+```java
+package visitor;
+
+
+public class ConcreteElementB implements Visitable{
+
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+
+    public void operateA() {
+        System.out.println("operateA ConcreteElementB ...");
+    }
+
+    public void operateB() {
+        System.out.println("operateB ConcreteElementB ...");
+    }
+}
+
+```
+
+ConcreteElementA 与 ConcreteElementB 是两个具体的数据类，实现了Visitable接口就须承担可被访问者访问的责任。
+
+```java
+package visitor;
+
+public interface Visitor {
+
+    void visit(ConcreteElementA able);
+
+    void visit(ConcreteElementB able);
+}
+```
+
+```java
+package visitor;
+
+public class ConcreteVisitorA implements Visitor {
+
+    @Override
+    public void visit(ConcreteElementA able) {
+        able.operate01();
+    }
+
+    @Override
+    public void visit(ConcreteElementB able) {
+        able.operateA();
+    }
+}
+```
+
+```java
+package visitor;
+
+public class ConcreteVisitorB implements Visitor {
+
+    @Override
+    public void visit(ConcreteElementA able) {
+        able.operate02();
+    }
+
+    @Override
+    public void visit(ConcreteElementB able) {
+        able.operateB();
+    }
+}
+
+```
+
+ConcreteVisitorA 和 ConcreteVisitorB是两个具体的访问者，它们针对同样的数据制定了不同的操作。
+
 
 ####访问者模式的实际运用
 ![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-dom4j.jpg)
