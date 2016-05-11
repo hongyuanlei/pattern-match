@@ -322,6 +322,84 @@ public class ConcreteVisitorB implements Visitor {
 
 ConcreteVisitorA 和 ConcreteVisitorB是两个具体的访问者，它们针对同样的数据制定了不同的操作。
 
+```java
+package visitor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ObjectStructure {
+
+    private List<Visitable> list = new ArrayList<>();
+
+    public void add(Visitable visitable) {
+        list.add(visitable);
+    }
+
+    public void action(Visitor visitor) {
+        list.forEach(v -> v.accept(visitor));
+    }
+}
+```
+
+ObjectStructure有两个执责：
+
+*   维护所有Visiable数据对象;
+*   使用特定的Visitor执行所有的Visitable;
+
+在访问者模式中它也并不是必须的。
+
+```java
+package visitor;
+
+public class Client {
+
+    public static void main(String[] args) {
+
+        ObjectStructure objectStructure = new ObjectStructure();
+        objectStructure.add(new ConcreteElementA());
+        objectStructure.add(new ConcreteElementB());
+
+        Visitor visitorA = new ConcreteVisitorA();
+        objectStructure.action(visitorA);
+
+        Visitor visitorB = new ConcreteVisitorB();
+        objectStructure.action(visitorB);
+    }
+}
+
+```
+再来看看Client，在Client中我们创建了一个ObjectStructure，并向其添加了两个不同的数据对象，之后我们又创建了一个Visitor，并使用这个Visitor去访问所有的Visitable。
+
+当我们执行这段代码都发生了些什么？
+
+有两个比较重要的地方, 第一个是ObjectStructure的action方法，这里action方法会迭代所有的Visitable并使用传入的Visitor来访问它们自己。
+
+```java
+public void action(Visitor visitor) {
+   list.forEach(v -> v.accept(visitor));
+}
+
+```
+假设v是ConcreteElementA，visitor是ConcreteVisitorA：
+
+在编译期，静态分派阶段，可以确定调Visitable.accept(Visitor)。
+
+在运行期，动态分派阶段，会将Visitable替换成其真实类型ConcreteElementA，所以会调用ConcreteElementA.accept(Visitor)。
+
+第二个是Visitable实现类中的accept方法。
+
+```java
+    @Override
+    public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
+```
+假设this是ConcreteElementA，Visitor是ConcreteVisitorA：
+
+在编译期，静态分派阶段，就已经可以确定调用Visitor.visit(ConcreteElementA)。
+
+在运行期，动态分派阶段，会将Visitor替换成其真实类型ConcreteVisitorA，所以会调用ConcreteVisitorA.visit(ConcreteElementA)。
 
 ####访问者模式的实际运用
 ![](https://raw.githubusercontent.com/hongyuanlei/pattern-match/master/image/visitor-pattern-dom4j.jpg)
